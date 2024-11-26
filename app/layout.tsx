@@ -16,17 +16,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="flex min-h-screen flex-col">
-          <header className="sticky top-0 z-40 border-b bg-background">
+    <html lang="en" className="h-full">
+      <body className={`${inter.className} h-full`}>
+        <div className="min-h-screen flex flex-col">
+          <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container flex h-16 items-center justify-between py-4">
               <MainNav />
               <UserNav />
             </div>
           </header>
-          <main className="flex-1 space-y-4 p-8 pt-6">
-            {children}
+          <main className="flex-1 overflow-auto">
+            <div className="container mx-auto p-6">
+              {children}
+            </div>
           </main>
         </div>
       </body>
