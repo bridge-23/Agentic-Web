@@ -38,9 +38,8 @@ export default function DataSourceWizard() {
         {steps.map((step) => (
           <div
             key={step.id}
-            className={`flex items-center ${
-              currentStep === step.id ? "text-primary" : "text-muted-foreground"
-            }`}
+            className={`flex items-center ${currentStep === step.id ? "text-primary" : "text-muted-foreground"
+              }`}
           >
             <div className="w-8 h-8 rounded-full border-2 flex items-center justify-center mr-2">
               {steps.indexOf(step) + 1}
@@ -52,17 +51,28 @@ export default function DataSourceWizard() {
       </div>
 
       {currentStep === "select" && (
-        <div className="space-y-4">
+        <div className="space-y-4 relative z-10">
           <Label htmlFor="data-source">Select a data source</Label>
-          <Select value={dataSource} onValueChange={setDataSource}>
-            <SelectTrigger id="data-source">
+          <Select
+            value={dataSource}
+            onValueChange={setDataSource}
+            name="data-source"
+          >
+            <SelectTrigger
+              id="data-source"
+              className="w-full bg-popover relative"
+            >
               <SelectValue placeholder="Choose a data source" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent
+              ref={(ref) =>
+                ref?.addEventListener("touchend", (e) => e.preventDefault())
+              }
+            >
               <SelectItem value="google-analytics">Google Analytics</SelectItem>
               <SelectItem value="salesforce">Salesforce</SelectItem>
               <SelectItem value="hubspot">HubSpot</SelectItem>
-              <SelectItem value="custom-api">Custom API</SelectItem>
+              <SelectItem value="customapi">Custom API</SelectItem>
             </SelectContent>
           </Select>
         </div>

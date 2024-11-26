@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
@@ -34,7 +36,11 @@ export default function FineTuning() {
             <SelectTrigger id="primary-agent">
               <SelectValue placeholder="Select agent" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent
+              ref={(ref) =>
+                ref?.addEventListener("touchend", (e) => e.preventDefault())
+              }
+            >
               <SelectItem value="agent1">Agent 1</SelectItem>
               <SelectItem value="agent2">Agent 2</SelectItem>
               <SelectItem value="agent3">Agent 3</SelectItem>
