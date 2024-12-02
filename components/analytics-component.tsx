@@ -31,7 +31,7 @@ export default function AnalyticsComponent() {
           <Card>
             <CardHeader>
               <CardTitle>Performance Metrics</CardTitle>
-              <CardDescription>Analyze your AI models' performance</CardDescription>
+              <CardDescription>Analyze your AI models&apos; performance</CardDescription>
             </CardHeader>
             <CardContent>
               <PerformanceMetrics />
@@ -42,10 +42,10 @@ export default function AnalyticsComponent() {
           <Card>
             <CardHeader>
               <CardTitle>Agent Activity</CardTitle>
-              <CardDescription>Monitor your AI agents' activities</CardDescription>
+              <CardDescription>Monitor your AI agents&apos; activities</CardDescription>
             </CardHeader>
             <CardContent>
-              <AgentActivity />
+              <AgentActivity activities={[]} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -53,4 +53,3 @@ export default function AnalyticsComponent() {
     </div>
   )
 }
-
