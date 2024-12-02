@@ -3,8 +3,13 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-export default function AgentInteraction({ agent }) {
-  const [messages, setMessages] = useState([])
+interface Message {
+  role: "user" | "agent"
+  content: string
+}
+
+export default function AgentInteraction() {
+  const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
 
   const handleSendMessage = () => {
@@ -56,4 +61,3 @@ export default function AgentInteraction({ agent }) {
     </div>
   )
 }
-

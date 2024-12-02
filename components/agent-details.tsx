@@ -1,7 +1,14 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
-export default function AgentDetails({ agent }) {
+interface AgentDetailsProps {
+  agent: {
+    name: string;
+    // Add other agent properties you need
+  }
+}
+
+export default function AgentDetails({ }: AgentDetailsProps) {
   // This is mock data. In a real application, you would fetch this data based on the selected agent.
   const agentDetails = {
     description: "This AI agent is designed to assist with a wide range of tasks and queries.",

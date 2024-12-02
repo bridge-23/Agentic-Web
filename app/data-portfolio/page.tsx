@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { Plus, Upload, FileUp, BanknoteIcon as Bank, TrendingUp } from 'lucide-react'
+import { Plus, Upload, BanknoteIcon as Bank } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import {
