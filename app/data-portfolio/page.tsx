@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { MainNav } from "@/components/main-nav"
 import { Search } from "@/components/search"
-import TeamSwitcher from "@/components/team-switcher"
+// import TeamSwitcher from "@/components/team-switcher"
 import { UserNav } from "@/components/user-nav"
 import { DataSourceCard } from "@/components/data-source-card"
 import { FileCard } from "@/components/file-card"
@@ -123,7 +123,7 @@ export default function DataPortfolioPage() {
     <div className="flex flex-col min-h-screen">
       <div className="border-b">
         <div className="flex h-16 items-center px-4">
-          <TeamSwitcher />
+          {/* <TeamSwitcher /> */}
           <MainNav className="mx-6" />
           <div className="ml-auto flex items-center space-x-4">
             <Search />

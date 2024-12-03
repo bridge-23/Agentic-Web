@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -31,6 +32,28 @@ export function MainNav({
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
+      <Link href="/dashboard" className="hidden md:flex items-center mr-6">
+        <Image
+          src="/Bridge23Logo v 1.png"
+          alt="Bridge23 Logo"
+          width={140}
+          height={40}
+          className="h-10 w-auto object-contain"
+          priority
+        />
+      </Link>
+      <div className="md:hidden">
+        <Link href="/dashboard" className="flex items-center">
+          <Image
+            src="/Bridge23Logo v 1.png"
+            alt="Bridge23 Logo"
+            width={100}
+            height={30}
+            className="h-8 w-auto object-contain"
+            priority
+          />
+        </Link>
+      </div>
       <div className="hidden md:flex md:space-x-4 lg:space-x-6">
         {routes.map((route) => (
           <Link
@@ -47,7 +70,7 @@ export function MainNav({
           </Link>
         ))}
       </div>
-      <div className="md:hidden">
+      <div className="md:hidden ml-auto">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">
