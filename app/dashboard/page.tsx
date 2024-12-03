@@ -20,6 +20,7 @@ import { UserNav } from "@/components/user-nav"
 import { Analytics } from "@/components/analytics"
 import { Reports } from "@/components/reports"
 import { Notifications } from "@/components/notifications"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -35,6 +36,7 @@ export default function DashboardPage() {
           <MainNav className="mx-6" />
           <div className="ml-auto flex items-center space-x-4">
             <Search />
+            <ThemeToggle />
             <UserNav />
           </div>
         </div>
