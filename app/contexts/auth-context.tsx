@@ -2,11 +2,9 @@
 
 import { createContext, useContext, useState, useEffect } from 'react'
 import { AuthService } from '../services/auth.service'
-import type { User } from '@junobuild/core'
 
 interface AuthContextType {
   isAuthenticated: boolean
-  user: User | null
   signIn: () => Promise<void>
   signOut: () => Promise<void>
   loading: boolean
@@ -15,7 +13,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -25,30 +23,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   async function initializeAuth() {
     try {
       await AuthService.initialize()
-      const currentUser = await AuthService.getUser()
-      setUser(currentUser)
+      // We'll handle authentication state through Juno's built-in mechanisms
+      setLoading(false)
     } catch (error) {
       console.error('Auth initialization failed:', error)
-    } finally {
       setLoading(false)
     }
   }
 
   const signIn = async () => {
-    const newUser = await AuthService.signIn()
-    setUser(newUser)
+    await AuthService.signIn()
+    setIsAuthenticated(true)
   }
 
   const signOut = async () => {
     await AuthService.signOut()
-    setUser(null)
+    setIsAuthenticated(false)
   }
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: !!user,
-        user,
+        isAuthenticated,
         signIn,
         signOut,
         loading
