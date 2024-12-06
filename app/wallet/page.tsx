@@ -9,10 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { MainNav } from "@/components/main-nav"
-import { Search } from "@/components/search"
-// import TeamSwitcher from "@/components/team-switcher"
-import { UserNav } from "@/components/user-nav"
 import { TokenBalance } from "@/components/token-balance"
 import { TransactionHistory } from "@/components/transaction-history"
 import { RewardsOverview } from "@/components/rewards-overview"
@@ -26,16 +22,6 @@ export const metadata: Metadata = {
 export default function WalletPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="border-b">
-        <div className="flex h-16 items-center px-4">
-          {/* <TeamSwitcher /> */}
-          <MainNav className="mx-6" />
-          <div className="ml-auto flex items-center space-x-4">
-            <Search />
-            <UserNav />
-          </div>
-        </div>
-      </div>
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
         <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:space-y-0">
           <h2 className="text-3xl font-bold tracking-tight">Wallet</h2>
@@ -68,14 +54,28 @@ export default function WalletPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Rewards Earned
+                Credits Earned
               </CardTitle>
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">275 PTN</div>
+              <div className="text-2xl font-bold">275 Credits</div>
               <p className="text-xs text-muted-foreground">
-                75 PTN this month
+                75 Credits this month
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Upcoming Distribution
+              </CardTitle>
+              <CreditCard className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">600 Credits</div>
+              <p className="text-xs text-muted-foreground">
+               111 Credits this month
               </p>
             </CardContent>
           </Card>

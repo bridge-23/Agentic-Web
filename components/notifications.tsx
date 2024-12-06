@@ -19,12 +19,14 @@ export function Notifications() {
         <div className="space-y-4">
           {notificationsData.map((notification) => (
             <div key={notification.id} className="flex items-start space-x-4 p-4 bg-secondary rounded-lg">
-              {notification.type === "info" && <InfoIcon className="h-5 w-5 text-blue-500" />}
-              {notification.type === "success" && <CheckCircle className="h-5 w-5 text-green-500" />}
-              {notification.type === "warning" && <Bell className="h-5 w-5 text-yellow-500" />}
-              {notification.type === "error" && <AlertCircle className="h-5 w-5 text-red-500" />}
-              <div className="flex-1">
-                <p className="text-sm font-medium">{notification.message}</p>
+              <div className="flex-shrink-0">
+                {notification.type === "info" && <InfoIcon className="h-5 w-5 text-blue-500" />}
+                {notification.type === "success" && <CheckCircle className="h-5 w-5 text-green-500" />}
+                {notification.type === "warning" && <Bell className="h-5 w-5 text-yellow-500" />}
+                {notification.type === "error" && <AlertCircle className="h-5 w-5 text-red-500" />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">{notification.message}</p>
                 <p className="text-xs text-muted-foreground">{notification.time}</p>
               </div>
             </div>

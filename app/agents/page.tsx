@@ -1,7 +1,15 @@
 import { Metadata } from "next"
-import { Plus } from 'lucide-react'
-
+import { Plus, Clock, Brain } from 'lucide-react'
+import Image from 'next/image'
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,11 +18,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MainNav } from "@/components/main-nav"
-import { Search } from "@/components/search"
-// import TeamSwitcher from "@/components/team-switcher"
-import { UserNav } from "@/components/user-nav"
 import { AgentCard } from "@/components/agent-card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ThreadDialog } from "@/components/thread-dialog"
+import { MemoryDialog } from "@/components/memory-dialog"
 
 export const metadata: Metadata = {
   title: "Agents",
@@ -23,42 +30,42 @@ export const metadata: Metadata = {
 
 const agents = [
   {
-    name: "Travel Planner",
+    name: "Mercurios",
     description: "Plans and organizes travel itineraries",
     status: "Active",
     tasks: 152,
     uptime: "99.9%",
   },
   {
-    name: "Nutrition Guide",
+    name: "Hippocrates",
     description: "Provides personalized meal plans and nutrition advice",
     status: "Active",
     tasks: 87,
     uptime: "98.5%",
   },
   {
-    name: "Task Manager",
+    name: "Prometheus",
     description: "Organizes and prioritizes tasks and to-do lists",
     status: "Active",
     tasks: 203,
     uptime: "100%",
   },
   {
-    name: "Day Planner",
+    name: "Venus",
     description: "Schedules and optimizes daily activities",
     status: "Idle",
     tasks: 56,
     uptime: "97.8%",
   },
   {
-    name: "Meeting Scheduler",
+    name: "Jupiter",
     description: "Coordinates and schedules meetings efficiently",
     status: "Active",
     tasks: 98,
     uptime: "99.5%",
   },
   {
-    name: "Transcription Assistant",
+    name: "Minerva",
     description: "Transcribes and summarizes meetings and conversations",
     status: "Maintenance",
     tasks: 72,
@@ -66,19 +73,86 @@ const agents = [
   },
 ]
 
+const threads = [
+  {
+    id: 1,
+    agent: "Mercurios",
+    topic: "Travel planning for summer vacation",
+    lastUpdated: "2 hours ago",
+    messages: [
+      { id: 1, sender: "User", content: "I'm planning a summer vacation to Europe. Can you help?", timestamp: "2023-06-15 10:00:00" },
+      { id: 2, sender: "Mercurios", content: "I'd be happy to help you plan your European summer vacation. Could you please provide me with some more details about your preferences?", timestamp: "2023-06-15 10:02:00" },
+      { id: 3, sender: "User", content: "I'm interested in visiting France and Italy for about 2 weeks in August.", timestamp: "2023-06-15 10:05:00" },
+      { id: 4, sender: "Mercurios", content: "Great choices! Let's start by outlining a rough itinerary. We'll need to consider transportation between countries, accommodations, and must-see attractions. Shall we begin with Paris?", timestamp: "2023-06-15 10:08:00" },
+    ]
+  },
+  {
+    id: 2,
+    agent: "Hippocrates",
+    topic: "Weekly meal plan creation",
+    lastUpdated: "1 day ago",
+    messages: [
+      { id: 1, sender: "User", content: "I need a healthy meal plan for next week.", timestamp: "2023-06-14 09:00:00" },
+      { id: 2, sender: "Hippocrates", content: "I'd be glad to help you create a healthy meal plan. Do you have any dietary restrictions or preferences I should be aware of?", timestamp: "2023-06-14 09:02:00" },
+      { id: 3, sender: "User", content: "I'm vegetarian and trying to increase my protein intake.", timestamp: "2023-06-14 09:05:00" },
+      { id: 4, sender: "Hippocrates", content: "Thank you for providing that information. I'll create a vegetarian meal plan with a focus on high-protein options. Let's start with breakfast ideas. How about a protein-packed smoothie bowl?", timestamp: "2023-06-14 09:08:00" },
+    ]
+  },
+  {
+    id: 3,
+    agent: "Prometheus",
+    topic: "Project deadline management",
+    lastUpdated: "3 hours ago",
+    messages: [
+      { id: 1, sender: "User", content: "I'm struggling to meet my project deadlines. Can you help me manage my time better?", timestamp: "2023-06-15 14:00:00" },
+      { id: 2, sender: "Prometheus", content: "Of course, I'd be happy to help you improve your time management and meet your project deadlines. Can you tell me more about your current project and the deadlines you're working with?", timestamp: "2023-06-15 14:02:00" },
+      { id: 3, sender: "User", content: "I have a web development project due in 2 weeks, but I'm behind on the backend work.", timestamp: "2023-06-15 14:05:00" },
+      { id: 4, sender: "Prometheus", content: "I see. Let's break down your project into smaller, manageable tasks and create a schedule. We'll prioritize the backend work. Can you estimate how many hours you think you need for the backend development?", timestamp: "2023-06-15 14:08:00" },
+    ]
+  },
+]
+
+const memories = [
+  {
+    id: 1,
+    agent: "Mercurios",
+    content: "User prefers window seats on flights",
+    created: "1 week ago",
+    details: "During a conversation about flight bookings, the user mentioned they always choose window seats for better views and to avoid disturbances."
+  },
+  {
+    id: 2,
+    agent: "Hippocrates",
+    content: "User is allergic to peanuts",
+    created: "2 weeks ago",
+    details: "While discussing dietary restrictions, the user disclosed a severe peanut allergy. This information is crucial for all future meal plans and restaurant recommendations."
+  },
+  {
+    id: 3,
+    agent: "Prometheus",
+    content: "User's most productive hours are 9AM-11AM",
+    created: "3 days ago",
+    details: "Through analysis of the user's work patterns and direct feedback, it was determined that the user is most focused and productive in the morning, specifically between 9AM and 11AM."
+  },
+  {
+    id: 4,
+    agent: "Venus",
+    content: "User likes to have a 30-minute break at 2PM",
+    created: "5 days ago",
+    details: "When optimizing the user's daily schedule, it was noted that they prefer and benefit from a short break in the afternoon, typically around 2PM, to recharge and maintain productivity."
+  },
+  {
+    id: 5,
+    agent: "Jupiter",
+    content: "User prefers video calls over phone calls",
+    created: "1 week ago",
+    details: "During multiple instances of scheduling meetings, the user has consistently opted for video call options when available, indicating a preference for this mode of communication over traditional phone calls."
+  },
+]
+
 export default function AgentsPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="border-b">
-        <div className="flex h-16 items-center px-4">
-          {/* <TeamSwitcher /> */}
-          <MainNav className="mx-6" />
-          <div className="ml-auto flex items-center space-x-4">
-            <Search />
-            <UserNav />
-          </div>
-        </div>
-      </div>
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
         <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:space-y-0">
           <h2 className="text-3xl font-bold tracking-tight">Agents</h2>
@@ -99,11 +173,119 @@ export default function AgentsPage() {
             </Button>
           </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {agents.map((agent) => (
-            <AgentCard key={agent.name} agent={agent} />
-          ))}
-        </div>
+        <Card className="mb-4">
+          <CardHeader>
+            <CardTitle>Communication Preferences</CardTitle>
+            <CardDescription>Choose your primary method for communicating with agents</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap gap-2">
+            <Button variant="outline" className="flex items-center gap-2">
+              <Image 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Digital_Glyph_Green-9MeLm8wj6mKY5IS1hZhBZDZF8pXAl6.png" 
+                alt="WhatsApp" 
+                width={20} 
+                height={20} 
+              />
+              WhatsApp
+              <Badge variant="secondary">Connected</Badge>
+            </Button>
+            <Button variant="outline" className="flex items-center gap-2">
+              <Image 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-TClIjQKdkhE7lCUqkA4eewKeTgZs0n.png" 
+                alt="Telegram" 
+                width={20} 
+                height={20} 
+              />
+              Telegram
+              <Badge variant="secondary">Connected</Badge>
+            </Button>
+            <Button variant="outline" className="flex items-center gap-2">
+              <Image 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facebook_Messenger_logo_2020.svg-L7tCu3abLuJxbPzvndGglgmLcDAYCb.webp" 
+                alt="Messenger" 
+                width={20} 
+                height={20} 
+              />
+              Messenger
+              <Badge variant="outline">Connect</Badge>
+            </Button>
+          </CardContent>
+        </Card>
+        <Tabs defaultValue="agents" className="space-y-4">
+          <TabsList>
+            <TabsTrigger value="agents">Agents</TabsTrigger>
+            <TabsTrigger value="threads">Threads History</TabsTrigger>
+            <TabsTrigger value="memory">Agents Memory</TabsTrigger>
+          </TabsList>
+          <TabsContent value="agents" className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {agents && agents.length > 0 ? (
+                agents.map((agent) => (
+                  <AgentCard key={agent.name} agent={agent} />
+                ))
+              ) : (
+                <div className="col-span-full text-center">
+                  <p className="text-lg font-medium">No agents available.</p>
+                  <p className="text-sm text-muted-foreground">Add a new agent to get started.</p>
+                </div>
+              )}
+            </div>
+          </TabsContent>
+          <TabsContent value="threads" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Threads History</CardTitle>
+                <CardDescription>Recent conversation threads with your agents</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-4">
+                  {threads.map((thread) => (
+                    <li key={thread.id} className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">{thread.agent}</p>
+                        <p className="text-sm text-muted-foreground">{thread.topic}</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="flex items-center">
+                          <Clock className="w-4 h-4 mr-2 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">{thread.lastUpdated}</span>
+                        </div>
+                        <ThreadDialog thread={thread} />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="memory" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Agents Memory</CardTitle>
+                <CardDescription>Important information remembered by your agents</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-4">
+                  {memories.map((memory) => (
+                    <li key={memory.id} className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">{memory.agent}</p>
+                        <p className="text-sm">{memory.content}</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="flex items-center">
+                          <Brain className="w-4 h-4 mr-2 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">{memory.created}</span>
+                        </div>
+                        <MemoryDialog memory={memory} />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   )

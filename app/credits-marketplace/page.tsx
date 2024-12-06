@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { TrendingUp, DollarSign, BarChart2 } from 'lucide-react'
+import { TrendingUp, DollarSign, BarChart2, Clock, Settings } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -10,10 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { MainNav } from "@/components/main-nav"
-import { Search } from "@/components/search"
-// import TeamSwitcher from "@/components/team-switcher"
-import { UserNav } from "@/components/user-nav"
 import { MarketOverview } from "@/components/market-overview"
 import { ExchangeRates } from "@/components/exchange-rates"
 import { TradeForm } from "@/components/trade-form"
@@ -28,16 +24,6 @@ export const metadata: Metadata = {
 export default function CreditsMarketplacePage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="border-b">
-        <div className="flex h-16 items-center px-4">
-          {/* <TeamSwitcher /> */}
-          <MainNav className="mx-6" />
-          <div className="ml-auto flex items-center space-x-4">
-            <Search />
-            <UserNav />
-          </div>
-        </div>
-      </div>
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
         <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:space-y-0">
           <h2 className="text-3xl font-bold tracking-tight">Credits Marketplace</h2>
