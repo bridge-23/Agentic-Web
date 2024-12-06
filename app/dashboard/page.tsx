@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { Activity, CreditCard, DollarSign, Users } from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,

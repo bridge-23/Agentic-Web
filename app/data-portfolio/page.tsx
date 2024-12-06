@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { Plus, Upload, FileUp, BanknoteIcon as Bank, TrendingUp } from 'lucide-react'
+import { Plus, Upload } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 const dataSources = [
   {
     name: "Google Calendar",
-    type: "Calendar",
+    type: "Calendar", 
     status: "Connected",
     lastSync: "2023-06-15T10:30:00Z",
     agentsUsing: ["Travel Planner", "Day Planner"],
@@ -35,7 +35,7 @@ const dataSources = [
   {
     name: "Dropbox",
     type: "File Storage",
-    status: "Connected",
+    status: "Connected", 
     lastSync: "2023-06-14T14:45:00Z",
     agentsUsing: ["Task Manager", "Meeting Scheduler"],
   },
@@ -43,7 +43,7 @@ const dataSources = [
     name: "Fitbit",
     type: "Health Data",
     status: "Connected",
-    lastSync: "2023-06-15T08:00:00Z",
+    lastSync: "2023-06-15T08:00:00Z", 
     agentsUsing: ["Nutrition Guide"],
   },
   {
@@ -55,7 +55,7 @@ const dataSources = [
   },
   {
     name: "X",
-    type: "Social Media",
+    type: "Social Media", 
     status: "Connected",
     lastSync: "2023-06-15T11:05:00Z",
     agentsUsing: ["Social Media Manager", "News Aggregator"],
@@ -70,7 +70,7 @@ const dataSources = [
   {
     name: "YouTube",
     type: "Video Platform",
-    status: "Connected",
+    status: "Connected", 
     lastSync: "2023-06-15T11:15:00Z",
     agentsUsing: ["Content Creator Assistant", "Video Analyzer"],
   },
@@ -93,7 +93,7 @@ const files = [
   },
   {
     name: "Financial Report Q2.xlsx",
-    type: "Spreadsheet",
+    type: "Spreadsheet", 
     size: "4.8 MB",
     uploadDate: "2023-06-13T11:45:00Z",
     agentsUsing: ["Task Manager", "Meeting Scheduler"],
@@ -233,4 +233,3 @@ export default function DataPortfolioPage() {
     </div>
   )
 }
-

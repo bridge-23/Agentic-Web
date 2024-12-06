@@ -26,7 +26,7 @@ export function MemoryDialog({ memory }: MemoryDialogProps) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{memory.agent}'s Memory</DialogTitle>
+          <DialogTitle>{memory.agent}&apos;s Memory</DialogTitle>
           <DialogDescription>Created {memory.created}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -43,4 +43,3 @@ export function MemoryDialog({ memory }: MemoryDialogProps) {
     </Dialog>
   )
 }
-
