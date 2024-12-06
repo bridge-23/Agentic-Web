@@ -16,6 +16,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Settings } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { useAuth } from '@/app/contexts/auth-context'
 import { useRouter } from 'next/navigation'
 
@@ -81,13 +83,15 @@ export function UserNav() {
             <DropdownMenuShortcut>⌘W</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => router.push('/settings')}>
-            Settings
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
-          Log out
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

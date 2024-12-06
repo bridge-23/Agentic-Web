@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { Plus, Upload, BanknoteIcon as Bank } from 'lucide-react'
+import { Plus, Upload } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -9,10 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { MainNav } from "@/components/main-nav"
-import { Search } from "@/components/search"
-// import TeamSwitcher from "@/components/team-switcher"
-import { UserNav } from "@/components/user-nav"
 import { DataSourceCard } from "@/components/data-source-card"
 import { FileCard } from "@/components/file-card"
 import { UploadFileDialog } from "@/components/upload-file-dialog"
@@ -31,7 +27,7 @@ export const metadata: Metadata = {
 const dataSources = [
   {
     name: "Google Calendar",
-    type: "Calendar",
+    type: "Calendar", 
     status: "Connected",
     lastSync: "2023-06-15T10:30:00Z",
     agentsUsing: ["Travel Planner", "Day Planner"],
@@ -39,7 +35,7 @@ const dataSources = [
   {
     name: "Dropbox",
     type: "File Storage",
-    status: "Connected",
+    status: "Connected", 
     lastSync: "2023-06-14T14:45:00Z",
     agentsUsing: ["Task Manager", "Meeting Scheduler"],
   },
@@ -47,7 +43,7 @@ const dataSources = [
     name: "Fitbit",
     type: "Health Data",
     status: "Connected",
-    lastSync: "2023-06-15T08:00:00Z",
+    lastSync: "2023-06-15T08:00:00Z", 
     agentsUsing: ["Nutrition Guide"],
   },
   {
@@ -59,7 +55,7 @@ const dataSources = [
   },
   {
     name: "X",
-    type: "Social Media",
+    type: "Social Media", 
     status: "Connected",
     lastSync: "2023-06-15T11:05:00Z",
     agentsUsing: ["Social Media Manager", "News Aggregator"],
@@ -74,7 +70,7 @@ const dataSources = [
   {
     name: "YouTube",
     type: "Video Platform",
-    status: "Connected",
+    status: "Connected", 
     lastSync: "2023-06-15T11:15:00Z",
     agentsUsing: ["Content Creator Assistant", "Video Analyzer"],
   },
@@ -97,7 +93,7 @@ const files = [
   },
   {
     name: "Financial Report Q2.xlsx",
-    type: "Spreadsheet",
+    type: "Spreadsheet", 
     size: "4.8 MB",
     uploadDate: "2023-06-13T11:45:00Z",
     agentsUsing: ["Task Manager", "Meeting Scheduler"],
@@ -121,16 +117,6 @@ const files = [
 export default function DataPortfolioPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="border-b">
-        <div className="flex h-16 items-center px-4">
-          {/* <TeamSwitcher /> */}
-          <MainNav className="mx-6" />
-          <div className="ml-auto flex items-center space-x-4">
-            <Search />
-            <UserNav />
-          </div>
-        </div>
-      </div>
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
         <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:space-y-0">
           <h2 className="text-3xl font-bold tracking-tight">Data Portfolio</h2>
@@ -247,4 +233,3 @@ export default function DataPortfolioPage() {
     </div>
   )
 }
-

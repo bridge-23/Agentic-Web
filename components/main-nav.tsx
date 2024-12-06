@@ -1,8 +1,9 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Menu } from 'lucide-react'
+import { Menu, Settings } from 'lucide-react'
 
 export function MainNav({
   className,
@@ -25,35 +26,23 @@ export function MainNav({
     { href: "/data-portfolio", label: "Data Portfolio" },
     { href: "/wallet", label: "Wallet" },
     { href: "/credits-marketplace", label: "Credits Marketplace" },
+    { href: "/settings", label: "Settings" },
   ]
 
   return (
     <nav
-      className={cn("flex items-center space-x-4 lg:space-x-6", className)}
+      className={cn("flex items-center space-x-4 lg:space-x-6 sticky top-0 z-50 bg-background shadow-sm", className)}
       {...props}
     >
-      <Link href="/dashboard" className="hidden md:flex items-center mr-6">
+      <Link href="/dashboard" className="mr-6">
         <Image
-          src="/Bridge23Logo v 1.png"
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%20Black%20transparent%20-%20Bridge23%20Logo%20v%201-7tis8804K0ZLkmP1nDsVwegyHnm1FG.png"
           alt="Bridge23 Logo"
-          width={140}
-          height={40}
-          className="h-10 w-auto object-contain"
-          priority
+          width={50}
+          height={50}
+          className="w-[50px] h-[50px] min-w-[50px] min-h-[50px] dark:invert"
         />
       </Link>
-      <div className="md:hidden">
-        <Link href="/dashboard" className="flex items-center">
-          <Image
-            src="/Bridge23Logo v 1.png"
-            alt="Bridge23 Logo"
-            width={100}
-            height={30}
-            className="h-8 w-auto object-contain"
-            priority
-          />
-        </Link>
-      </div>
       <div className="hidden md:flex md:space-x-4 lg:space-x-6">
         {routes.map((route) => (
           <Link
@@ -70,7 +59,7 @@ export function MainNav({
           </Link>
         ))}
       </div>
-      <div className="md:hidden ml-auto">
+      <div className="md:hidden">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">
@@ -81,7 +70,12 @@ export function MainNav({
           <DropdownMenuContent align="end">
             {routes.map((route) => (
               <DropdownMenuItem key={route.href} asChild>
-                <Link href={route.href}>{route.label}</Link>
+                <Link href={route.href}>
+                  {route.label === "Settings" ? (
+                    <Settings className="mr-2 h-4 w-4" />
+                  ) : null}
+                  {route.label}
+                </Link>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
 const rewardCategories = [
@@ -8,24 +9,25 @@ const rewardCategories = [
 
 export function RewardsOverview() {
   return (
-    <div className="space-y-8">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {rewardCategories.map((category) => (
-        <div key={category.name} className="space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <p className="text-sm font-medium leading-none">
-                {category.name}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {category.current} / {category.target} PTN
-              </p>
+        <Card key={category.name}>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">{category.name}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {category.current} / {category.target} BUD
             </div>
-            <div className="text-sm text-muted-foreground">
-              {Math.round((category.current / category.target) * 100)}%
-            </div>
-          </div>
-          <Progress value={(category.current / category.target) * 100} />
-        </div>
+            <p className="text-xs text-muted-foreground">
+              {Math.round((category.current / category.target) * 100)}% complete
+            </p>
+            <Progress
+              value={(category.current / category.target) * 100}
+              className="mt-2"
+            />
+          </CardContent>
+        </Card>
       ))}
     </div>
   )

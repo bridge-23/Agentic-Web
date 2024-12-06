@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Bar, BarChart, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
@@ -27,77 +27,69 @@ export function Analytics() {
   const [activeTab, setActiveTab] = useState("performance")
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Analytics Dashboard</CardTitle>
-        <CardDescription>View your agent performance and token usage</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="performance">Agent Performance</TabsTrigger>
-            <TabsTrigger value="usage">Token Usage</TabsTrigger>
-          </TabsList>
-          <TabsContent value="performance" className="space-y-4">
-            <div className="h-[400px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={agentPerformanceData}>
-                  <XAxis dataKey="agent" />
-                  <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-                  <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-                  <Tooltip />
-                  <Bar yAxisId="left" dataKey="tasks" fill="#8884d8" name="Tasks Completed" />
-                  <Bar yAxisId="right" dataKey="efficiency" fill="#82ca9d" name="Efficiency %" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {agentPerformanceData.map((agent) => (
-                <Card key={agent.agent}>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      {agent.agent}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{agent.tasks} tasks</div>
-                    <p className="text-xs text-muted-foreground">
-                      {agent.efficiency}% efficiency
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-          <TabsContent value="usage" className="space-y-4">
-            <div className="h-[400px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={tokenUsageData}>
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="tokens" stroke="#8884d8" />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {tokenUsageData.map((day) => (
-                <Card key={day.date}>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      {day.date}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{day.tokens} tokens</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+    <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <TabsList className="grid w-full grid-cols-2">
+        <TabsTrigger value="performance">Agent Performance</TabsTrigger>
+        <TabsTrigger value="usage">Token Usage</TabsTrigger>
+      </TabsList>
+      <TabsContent value="performance" className="space-y-4">
+        <div className="h-[300px] sm:h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={agentPerformanceData}>
+              <XAxis dataKey="agent" tick={{ fontSize: 12 }} />
+              <YAxis yAxisId="left" orientation="left" stroke="#8884d8" tick={{ fontSize: 12 }} />
+              <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" tick={{ fontSize: 12 }} />
+              <Tooltip />
+              <Bar yAxisId="left" dataKey="tasks" fill="#8884d8" name="Tasks Completed" />
+              <Bar yAxisId="right" dataKey="efficiency" fill="#82ca9d" name="Efficiency %" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {agentPerformanceData.map((agent) => (
+            <Card key={agent.agent}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  {agent.agent}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{agent.tasks} tasks</div>
+                <p className="text-xs text-muted-foreground">
+                  {agent.efficiency}% efficiency
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </TabsContent>
+      <TabsContent value="usage" className="space-y-4">
+        <div className="h-[300px] sm:h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={tokenUsageData}>
+              <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} />
+              <Tooltip />
+              <Line type="monotone" dataKey="tokens" stroke="#8884d8" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {tokenUsageData.map((day) => (
+            <Card key={day.date}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  {day.date}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{day.tokens} tokens</div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </TabsContent>
+    </Tabs>
   )
 }
 

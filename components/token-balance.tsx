@@ -9,8 +9,8 @@ export function TokenBalance() {
         <Coins className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">5,231 PTN</div>
-        <CardDescription>Chat Credits</CardDescription>
+        <div className="text-2xl font-bold">5,231 BUD</div>
+        <CardDescription>Data Units Token</CardDescription>
       </CardContent>
     </Card>
   )
