@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service'
 
 interface AuthContextType {
   isAuthenticated: boolean
+  user: any
   signIn: () => Promise<void>
   signOut: () => Promise<void>
   loading: boolean
@@ -14,6 +15,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -45,6 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        user,
         signIn,
         signOut,
         loading
