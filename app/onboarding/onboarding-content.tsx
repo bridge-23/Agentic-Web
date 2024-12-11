@@ -94,9 +94,9 @@ export function OnboardingContent() {
   )
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
-      <Card className="w-full max-w-lg">
-        <CardHeader>
+    <div className="flex min-h-screen items-center justify-center bg-background w-full">
+      <Card className="w-full max-w-lg bg-card">
+      <CardHeader>
           <CardTitle className="text-2xl font-bold">{steps[step].title}</CardTitle>
           <CardDescription>{steps[step].content}</CardDescription>
         </CardHeader>
