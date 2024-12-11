@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { TrendingUp, DollarSign, BarChart2 } from 'lucide-react'
+import { TrendingUp, DollarSign, BarChart2, Clock, Settings } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -159,3 +159,4 @@ export default function CreditsMarketplacePage() {
     </div>
   )
 }
+
