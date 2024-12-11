@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Metadata } from "next"
 import { Plus } from 'lucide-react'
 import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
@@ -38,11 +37,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-export const metadata: Metadata = {
-  title: "Agents",
-  description: "Manage your AI agents in Pantheon",
-}
 
 const agents = [
   {

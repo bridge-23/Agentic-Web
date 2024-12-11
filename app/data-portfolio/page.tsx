@@ -1,4 +1,5 @@
-import { Metadata } from "next"
+"use client"
+
 import { Plus, Upload, FileUp, BanknoteIcon as Bank, TrendingUp } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
@@ -18,11 +19,6 @@ import { PopularData } from "@/components/popular-data"
 import { DataRecommendations } from "@/components/data-recommendations"
 import { BankAccounts } from "@/components/bank-accounts"
 import { InvestmentPortfolio } from "@/components/investment-portfolio"
-
-export const metadata: Metadata = {
-  title: "Data Portfolio",
-  description: "Manage your data sources and files in Pantheon",
-}
 
 const dataSources = [
   {
