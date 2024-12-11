@@ -1,5 +1,8 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { Metadata } from "next"
-import { Plus, Clock, Brain } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -11,6 +14,23 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { toast } from "@/components/ui/use-toast"
+import { Clock, Brain } from 'lucide-react'
+import { AgentCard } from "@/components/agent-card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ThreadDialog } from "@/components/thread-dialog"
+import { MemoryDialog } from "@/components/memory-dialog"
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -18,10 +38,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { AgentCard } from "@/components/agent-card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ThreadDialog } from "@/components/thread-dialog"
-import { MemoryDialog } from "@/components/memory-dialog"
 
 export const metadata: Metadata = {
   title: "Agents",
@@ -150,7 +166,112 @@ const memories = [
   },
 ]
 
+interface CommunicationMethod {
+  name: string
+  icon: string
+  isConnected: boolean
+  chatLink: string
+}
+
 export default function AgentsPage() {
+  const [communicationMethods, setCommunicationMethods] = useState<CommunicationMethod[]>([
+    {
+      name: "WhatsApp",
+      icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Digital_Glyph_Green-9MeLm8wj6mKY5IS1hZhBZDZF8pXAl6.png",
+      isConnected: false,
+      chatLink: "",
+    },
+    {
+      name: "Telegram",
+      icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-TClIjQKdkhE7lCUqkA4eewKeTgZs0n.png",
+      isConnected: false,
+      chatLink: "",
+    },
+    {
+      name: "Messenger",
+      icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facebook_Messenger_logo_2020.svg-L7tCu3abLuJxbPzvndGglgmLcDAYCb.webp",
+      isConnected: false,
+      chatLink: "",
+    },
+  ])
+
+  const [selectedMethod, setSelectedMethod] = useState<CommunicationMethod | null>(null)
+  const [isConnecting, setIsConnecting] = useState(false)
+  const [chatLink, setChatLink] = useState("")
+  const [showCongrats, setShowCongrats] = useState(false)
+  const [showAddAgentDialog, setShowAddAgentDialog] = useState(false)
+  const [newAgentName, setNewAgentName] = useState("")
+  const [newAgentDescription, setNewAgentDescription] = useState("")
+
+  const handleConnect = (method: CommunicationMethod) => {
+    setSelectedMethod(method)
+    setIsConnecting(true)
+  }
+
+  const handleDisconnect = (method: CommunicationMethod) => {
+    const updatedMethods = communicationMethods.map((m) =>
+      m.name === method.name ? { ...m, isConnected: false, chatLink: "" } : m
+    )
+    setCommunicationMethods(updatedMethods)
+    toast({
+      title: "Disconnected",
+      description: `You have been disconnected from ${method.name}.`,
+    })
+  }
+
+  const handleSubmitChatLink = () => {
+    if (selectedMethod) {
+      const updatedMethods = communicationMethods.map((m) =>
+        m.name === selectedMethod.name ? { ...m, isConnected: true, chatLink } : m
+      )
+      setCommunicationMethods(updatedMethods)
+      setIsConnecting(false)
+      setChatLink("")
+      setShowCongrats(true)
+      toast({
+        title: "Connected",
+        description: `You have successfully connected to ${selectedMethod.name}.`,
+      })
+    }
+  }
+
+  const handleAddAgent = (event: React.FormEvent) => {
+    event.preventDefault()
+    // Here you would typically send the new agent data to your backend
+    toast({
+      title: "Agent Added",
+      description: `${newAgentName} has been successfully added.`,
+    })
+    setShowAddAgentDialog(false)
+    setNewAgentName("")
+    setNewAgentDescription("")
+  }
+
+  useEffect(() => {
+    if (showCongrats) {
+      const timer = setTimeout(() => {
+        setShowCongrats(false)
+      }, 4000)
+      return () => clearTimeout(timer)
+    }
+  }, [showCongrats])
+
+  const CongratsWindow = ({ onClose }: { onClose: () => void }) => (
+    <Dialog open={true} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Congratulations!</DialogTitle>
+          <DialogDescription>
+            You have successfully connected to the chat.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button onClick={onClose}>Close</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -168,7 +289,7 @@ export default function AgentsPage() {
                 <DropdownMenuItem>List view</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button className="w-full md:w-auto">
+            <Button className="w-full md:w-auto" onClick={() => setShowAddAgentDialog(true)}>
               <Plus className="mr-2 h-4 w-4" /> Add Agent
             </Button>
           </div>
@@ -179,36 +300,25 @@ export default function AgentsPage() {
             <CardDescription>Choose your primary method for communicating with agents</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
-            <Button variant="outline" className="flex items-center gap-2">
-              <Image 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Digital_Glyph_Green-9MeLm8wj6mKY5IS1hZhBZDZF8pXAl6.png" 
-                alt="WhatsApp" 
-                width={20} 
-                height={20} 
-              />
-              WhatsApp
-              <Badge variant="secondary">Connected</Badge>
-            </Button>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Image 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-TClIjQKdkhE7lCUqkA4eewKeTgZs0n.png" 
-                alt="Telegram" 
-                width={20} 
-                height={20} 
-              />
-              Telegram
-              <Badge variant="secondary">Connected</Badge>
-            </Button>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Image 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facebook_Messenger_logo_2020.svg-L7tCu3abLuJxbPzvndGglgmLcDAYCb.webp" 
-                alt="Messenger" 
-                width={20} 
-                height={20} 
-              />
-              Messenger
-              <Badge variant="outline">Connect</Badge>
-            </Button>
+            {communicationMethods.map((method) => (
+              <Button
+                key={method.name}
+                variant="outline"
+                className="flex items-center gap-2"
+                onClick={() => method.isConnected ? handleDisconnect(method) : handleConnect(method)}
+              >
+                <Image 
+                  src={method.icon}
+                  alt={method.name}
+                  width={20}
+                  height={20}
+                />
+                {method.name}
+                <Badge variant={method.isConnected ? "secondary" : "outline"}>
+                  {method.isConnected ? "Connected" : "Connect"}
+                </Badge>
+              </Button>
+            ))}
           </CardContent>
         </Card>
         <Tabs defaultValue="agents" className="space-y-4">
@@ -287,6 +397,73 @@ export default function AgentsPage() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <Dialog open={isConnecting} onOpenChange={setIsConnecting}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Connect to {selectedMethod?.name}</DialogTitle>
+            <DialogDescription>
+              Enter your chat link to connect with {selectedMethod?.name}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="chatLink" className="text-right">
+                Chat Link
+              </Label>
+              <Input
+                id="chatLink"
+                value={chatLink}
+                onChange={(e) => setChatLink(e.target.value)}
+                className="col-span-3"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit" onClick={handleSubmitChatLink}>Connect</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={showAddAgentDialog} onOpenChange={setShowAddAgentDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add New Agent</DialogTitle>
+            <DialogDescription>
+              Fill in the details to add a new agent to your team.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleAddAgent}>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input
+                  id="name"
+                  value={newAgentName}
+                  onChange={(e) => setNewAgentName(e.target.value)}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="description" className="text-right">
+                  Description
+                </Label>
+                <Input
+                  id="description"
+                  value={newAgentDescription}
+                  onChange={(e) => setNewAgentDescription(e.target.value)}
+                  className="col-span-3"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Add Agent</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+      {showCongrats && <CongratsWindow onClose={() => setShowCongrats(false)} />}
     </div>
   )
 }

@@ -14,8 +14,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 const steps = [
   { title: 'Welcome to Pantheon', content: 'Your personal AI avatar' },
@@ -50,6 +58,7 @@ export function OnboardingContent() {
   const [currency, setCurrency] = useState("")
   const [useCase, setUseCase] = useState("")
   const [otherUseCase, setOtherUseCase] = useState("")
+  const [showCongrats, setShowCongrats] = useState(false)
   const router = useRouter()
 
   const handleNext = () => {
@@ -58,9 +67,31 @@ export function OnboardingContent() {
     } else {
       // Here you would typically save the user's profile data
       console.log("Profile data:", { nickname, avatar, timezone, currency, useCase, otherUseCase })
+      setShowCongrats(true)
       router.push('/dashboard')
     }
   }
+
+  const CongratsWindow = () => (
+    <Dialog open={showCongrats} onOpenChange={setShowCongrats}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Congratulations!</DialogTitle>
+          <DialogDescription>
+            You have successfully completed the onboarding process.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button onClick={() => {
+            setShowCongrats(false)
+            router.push('/dashboard')
+          }}>
+            Close
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
@@ -180,6 +211,8 @@ export function OnboardingContent() {
           </Button>
         </CardFooter>
       </Card>
+      {showCongrats && <CongratsWindow />}
     </div>
   )
 }
+

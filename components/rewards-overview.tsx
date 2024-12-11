@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { cn } from "@/lib/utils"
 
 const rewardCategories = [
   { name: "Task Completion", current: 275, target: 500 },
