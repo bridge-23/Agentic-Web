@@ -20,6 +20,8 @@ import { Settings } from 'lucide-react'
 import { LogOut } from 'lucide-react'
 import { useAuth } from '@/app/contexts/auth-context'
 import { useRouter } from 'next/navigation'
+import { Bell } from 'lucide-react'
+import Link from "next/link"
 
 export function UserNav() {
   const { isAuthenticated, user, signIn, signOut } = useAuth()
@@ -36,8 +38,8 @@ export function UserNav() {
 
   if (!isAuthenticated) {
     return (
-      <Button 
-        variant="outline" 
+      <Button
+        variant="outline"
         onClick={handleSignIn}
         className="w-full md:w-auto"
       >
@@ -51,41 +53,61 @@ export function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage 
+            <AvatarImage
               src="/avatars/01.png"
               alt={user ? user.toString() : "User"}
             />
             <AvatarFallback>
               {user ? user.toString().slice(0, 2).toUpperCase() : "U"}
+              <div className="relative w-full h-full flex items-center justify-center">
+                SC
+                <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-primary flex items-center justify-center">
+                  <Bell className="h-2 w-2 text-primary-foreground" />
+                </div>
+              </div>
             </AvatarFallback>
           </Avatar>
+          <div className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary flex items-center justify-center">
+            <Bell className="h-3 w-3 text-primary-foreground" />
+          </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {user ? user.toString().slice(0, 8) : "User"}
-            </p>
+            {user ? user.toString().slice(0, 8) : "User"}
             <p className="text-xs leading-none text-muted-foreground">
-              Internet Identity
+              m@example.com
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => router.push('/profile')}>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link href="/profile">
+              Profile
+              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push('/wallet')}>
-            Wallet
-            <DropdownMenuShortcut>⌘W</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link href="/billing">
+              Billing
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push('/settings')}>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link href="/notifications">
+              <Bell className="mr-2 h-4 w-4" />
+              <span>Notifications</span>
+              <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/settings">
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -98,3 +120,4 @@ export function UserNav() {
     </DropdownMenu>
   )
 }
+
