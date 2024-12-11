@@ -26,9 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex flex-col min-h-screen">
-            <header className="border-b">
-              <AuthProvider>
+          <AuthProvider>
+            <div className="flex flex-col min-h-screen">
+              <header className="border-b">
                 <div className="flex h-16 items-center px-4">
                   <Image
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%20Black%20transparent%20-%20Bridge23%20Logo%20v%201-7tis8804K0ZLkmP1nDsVwegyHnm1FG.png"
@@ -45,16 +45,15 @@ export default function RootLayout({
                   </div>
                 </div>
                 <Toaster />
-              </AuthProvider>
-            </header>
-            <main className="flex-1 pb-16">
-              {children}
-            </main>
-            <BottomNav className="md:hidden" />
-          </div>
+              </header>
+              <main className="flex-1 pb-16">
+                {children}
+              </main>
+              <BottomNav className="md:hidden" />
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
   )
 }
-
