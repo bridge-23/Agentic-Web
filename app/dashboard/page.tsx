@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import { Activity, CreditCard, DollarSign, Users } from 'lucide-react'
 
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -12,7 +13,6 @@ import { Overview } from "@/components/overview"
 import { RecentActivities } from "@/components/recent-activities"
 import { Analytics } from "@/components/analytics"
 import { Reports } from "@/components/reports"
-import { Notifications } from "@/components/notifications"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -95,14 +95,6 @@ export default function DashboardPage() {
             <Reports />
           </Card>
         </div>
-        <Card>
-          <CardHeader>
-            <CardTitle>Notifications</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Notifications />
-          </CardContent>
-        </Card>
       </div>
     </div>
   )
